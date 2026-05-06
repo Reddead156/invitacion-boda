@@ -69,7 +69,7 @@
                     <div class="text-left max-w-[180px]">
                         <p class="text-sm font-semibold text-slate-700">Dale play a nuestra canción</p>
                         <p class="text-xs text-slate-500 flex items-center gap-1 overflow-hidden whitespace-nowrap text-ellipsis">
-                            <i data-lucide="music" class="w-2.5 h-2.5 flex-shrink-0"></i> Eres mi Sueño - Fonseca
+                            <i data-lucide="music" class="w-2.5 h-2.5 flex-shrink-0"></i> I Wanna Be Yours - Arctic Monkeys
                         </p>
                     </div>
                 </div>
@@ -295,7 +295,7 @@
                     >
                         Confirmar Asistencia
                     </button>
-                    <p class="text-xs text-slate-400 mt-4">Por favor, confirmar antes del 10 de Octubre.</p>
+                    <p class="text-xs text-slate-400 mt-4">Por favor, confirmar antes del 10 de Septiembre.</p>
                 </form>
 
                 <!-- Mensaje de éxito oculto inicialmente -->
@@ -370,7 +370,7 @@
         }, 1000);
 
 
-        // 3. Lógica del Formulario RSVP
+        // 3. Lógica del Formulario RSVP conectada a WhatsApp
         let rsvpStatus = null;
         const btnSubmit = document.getElementById('btn-submit');
         const labelYes = document.getElementById('label-yes');
@@ -411,14 +411,29 @@
         rsvpForm.addEventListener('submit', (e) => {
             e.preventDefault();
             if (rsvpStatus) {
-                rsvpForm.classList.add('hidden');
-                rsvpSuccess.classList.remove('hidden');
                 
+                // === CONFIGURACIÓN DE WHATSAPP ===
+                // Reemplaza los ceros con tu número real. 
+                // Ejemplo para Nicaragua: "50588889999" (Código de país + número, sin el símbolo +)
+                const numeroWhatsApp = "50584441827"; 
+                
+                let mensajeWhatsApp = "";
+
                 if (rsvpStatus === 'yes') {
+                    mensajeWhatsApp = "¡Hola Jonathan y Alba! 🎉 Confirmo con mucha alegría mi asistencia a su boda. \n\nSoy: [Escribe tu nombre aquí]";
                     rsvpSuccessMsg.innerText = "Estamos muy felices de poder compartir este momento contigo.";
                 } else {
+                    mensajeWhatsApp = "¡Hola Jonathan y Alba! ✨ Agradezco mucho la invitación, pero lamentablemente no podré asistir. Les deseo lo mejor en su gran día. \n\nSoy: [Escribe tu nombre aquí]";
                     rsvpSuccessMsg.innerText = "Sentiremos mucho tu ausencia, gracias por avisarnos.";
                 }
+
+                // Generar el enlace de WhatsApp y abrirlo en una nueva pestaña
+                const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+                window.open(url, '_blank');
+
+                // Mostrar mensaje de éxito en la página
+                rsvpForm.classList.add('hidden');
+                rsvpSuccess.classList.remove('hidden');
             }
         });
     </script>
